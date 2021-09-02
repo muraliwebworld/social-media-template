@@ -1,6 +1,6 @@
 # Social Media Android app template using react-native
 Social Media template with live chat using react-native, react-navigation, AWS appsync client (offline and online modes), APOLLO client, Amplify, Cognito, graphql, NodeJS, javascript<br/><br/>
-This app allows user to publish social media like activities, upload images, live chat for every activity with live graphql subscription, offline content storage using AWS appsync<br/><br/>
+This app allows user to publish social media like activities, upload images, live chat for every activity with live graphql subscription, offline content storage using AWS appsync. It uses react context provider instead of redux store to pass credentials to child elements. It also uses withApollo to pass AWSappsync client downstream to all child elements<br/><br/>
 To install, it requires AWS Amplify CLI to create required AWS appsync setup with authorization using cognito and other dynamodb tables. Please refer schema.graphql to create required dynamodb table and modify as per your requirement. Some of details sensitive credentials are removed in amplify folder, it must be setup as per your AWS credentials using Amplify CLI<br/><br/>
 # Demo
 https://play.google.com/store/apps/details?id=com.indiacities.chennaicommunityforum
