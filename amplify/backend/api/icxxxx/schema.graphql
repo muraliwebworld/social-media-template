@@ -1,0 +1,534 @@
+type User @aws_api_key @aws_cognito_user_pools
+  @model 
+  @auth(rules: [{ allow: owner, operations: [create, update, delete] },{allow:private, operations:[read]},{allow:public, operations:[read]}]) {
+  id: ID!
+  username: String!
+  useravatar: String
+  bio: String
+  website: String
+  location: String
+  activityidlikes: [String]
+  chatrooms: [RoomLink] @connection(name: "UserLinks")
+  messages: [Message] @connection(name: "UserMessages")
+	createdAt: String
+	updatedAt: String
+  comments: [Comment] @connection(keyName: "byUser", fields: ["id"])
+}
+
+type Usermadras @aws_api_key @aws_cognito_user_pools
+  @model 
+  @auth(rules: [{ allow: owner, operations: [create, update, delete] },{allow:private, operations:[read]},{allow:public, operations:[read]}]) {
+  id: ID!
+  username: String!
+  useravatar: String
+  bio: String
+  website: String
+  location: String
+  activityidlikes: [String]
+  chatrooms: [RoomLinkmadras] @connection(name: "UserLinksmadras")
+  messages: [Messagemadras] @connection(name: "UserMessagesmadras")
+	createdAt: String
+	updatedAt: String
+  comments: [Commentmadras] @connection(keyName: "byUsermadras", fields: ["id"])
+}
+
+type Useric @aws_api_key @aws_cognito_user_pools
+  @model 
+  @auth(rules: [{ allow: owner, operations: [create, update, delete] },{allow:private, operations:[read]},{allow:public, operations:[read]}]) {
+  id: ID!
+  username: String!
+  useravatar: String
+  bio: String
+  website: String
+  location: String
+  activityidlikes: [String]
+  chatrooms: [RoomLinkic] @connection(name: "UserLinksic")
+  messages: [Messageic] @connection(name: "UserMessagesic")
+	createdAt: String
+	updatedAt: String
+  comments: [Commentic] @connection(keyName: "byUseric", fields: ["id"])
+}
+
+type PushNotificationsubscribers @aws_cognito_user_pools
+  @model 
+  @auth(rules: [{ allow: owner, operations: [create, update, delete]},{allow:private, operations:[read, create]},{allow:public, operations:[read, create]}]) {
+  id: ID!
+  subscription: String
+  tempfield: String
+	createdAt: String
+	updatedAt: String
+}
+
+type PushNotificationsubscribersmadras @aws_cognito_user_pools
+  @model 
+  @auth(rules: [{ allow: owner, operations: [create, update, delete]},{allow:private, operations:[read, create]},{allow:public, operations:[read, create]}]) {
+  id: ID!
+  subscription: String
+  tempfield: String
+	createdAt: String
+	updatedAt: String
+}
+
+type PushNotificationsubscribersic @aws_cognito_user_pools
+  @model 
+  @auth(rules: [{ allow: owner, operations: [create, update, delete]},{allow:private, operations:[read, create]},{allow:public, operations:[read, create]}]) {
+  id: ID!
+  subscription: String
+  tempfield: String
+	createdAt: String
+	updatedAt: String
+}
+
+type UserNotifications @aws_cognito_user_pools
+  @model 
+  @auth(rules: [{ allow: owner, ownerField: "userID", operations: [create, update, delete] }]) {
+  id: ID!
+  userID: ID!
+  messages: String
+  readstatus: Boolean
+	createdAt: String
+	updatedAt: String
+}
+
+type UserNotificationsmadras @aws_cognito_user_pools
+  @model 
+  @auth(rules: [{ allow: owner, ownerField: "userID", operations: [create, update, delete] }]) {
+  id: ID!
+  userID: ID!
+  messages: String
+  readstatus: Boolean
+	createdAt: String
+	updatedAt: String
+}
+
+type UserNotificationsic @aws_cognito_user_pools
+  @model 
+  @auth(rules: [{ allow: owner, ownerField: "userID", operations: [create, update, delete] }]) {
+  id: ID!
+  userID: ID!
+  messages: String
+  readstatus: Boolean
+	createdAt: String
+	updatedAt: String
+}
+
+
+type Chatroom @aws_cognito_user_pools
+  @model(
+    mutations: { create: "createRoom", update: "updateRoom", delete: "deleteRoom" }
+    queries: { get: "getRoom", list: "listRooms" }
+    subscriptions: null
+  )
+  @auth(rules: [{ allow: owner, ownerField: "memberids" , operations: [create, update, delete, read]}]) {
+  id: ID!
+  messages: [Message] @connection(name: "RoomMsgs", sortField: "createdAt")
+  associated: [RoomLink] @connection(name: "AssociatedLinks")
+  name: String!
+  members: [String!]!
+  memberids: [String!]!
+  ownerId: String
+  Moderators: [String]
+	createdAt: String
+	updatedAt: String
+}
+
+type Chatroommadras @aws_cognito_user_pools
+  @model(
+    mutations: { create: "createRoommadras", update: "updateRoommadras", delete: "deleteRoommadras" }
+    queries: { get: "getRoommadras", list: "listRoomsmadras" }
+    subscriptions: null
+  )
+  @auth(rules: [{ allow: owner, ownerField: "memberids" , operations: [create, update, delete, read]}]) {
+  id: ID!
+  messages: [Messagemadras] @connection(name: "RoomMsgsmadras", sortField: "createdAt")
+  associated: [RoomLinkmadras] @connection(name: "AssociatedLinksmadras")
+  name: String!
+  members: [String!]!
+  memberids: [String!]!
+  ownerId: String
+  Moderators: [String]
+	createdAt: String
+	updatedAt: String
+}
+
+type Chatroomic @aws_cognito_user_pools
+  @model(
+    mutations: { create: "createRoomic", update: "updateRoomic", delete: "deleteRoomic" }
+    queries: { get: "getRoomic", list: "listRoomsic" }
+    subscriptions: null
+  )
+  @auth(rules: [{ allow: owner, ownerField: "memberids" , operations: [create, update, delete, read]}]) {
+  id: ID!
+  messages: [Messageic] @connection(name: "RoomMsgsic", sortField: "createdAt")
+  associated: [RoomLinkic] @connection(name: "AssociatedLinksic")
+  name: String!
+  members: [String!]!
+  memberids: [String!]!
+  ownerId: String
+  Moderators: [String]
+	createdAt: String
+	updatedAt: String
+}
+
+type Message @aws_cognito_user_pools
+  @model(subscriptions: null, queries: null) 
+  @auth(rules: [{ allow: owner, ownerField: "authorId", operations: [create, update, delete] }]) {
+  id: ID!
+  author: User @connection(name: "UserMessages", keyField: "authorId")
+  authorId: String
+  authorName: String!
+  authorImage: String!  
+  content: String!
+  chatroom: Chatroom! @connection(name: "RoomMsgs")
+  messageRoomId: ID!
+  messageChatroomId: ID!
+	createdAt: String
+	updatedAt: String
+}
+
+type Messagemadras @aws_cognito_user_pools
+  @model(subscriptions: null, queries: null) 
+  @auth(rules: [{ allow: owner, ownerField: "authorId", operations: [create, update, delete] }]) {
+  id: ID!
+  author: Usermadras @connection(name: "UserMessagesmadras", keyField: "authorId")
+  authorId: String
+  authorName: String!
+  authorImage: String!  
+  content: String!
+  chatroom: Chatroommadras! @connection(name: "RoomMsgsmadras")
+  messageRoomId: ID!
+  messageChatroomId: ID!
+	createdAt: String
+	updatedAt: String
+}
+
+type Messageic @aws_cognito_user_pools
+  @model(subscriptions: null, queries: null) 
+  @auth(rules: [{ allow: owner, ownerField: "authorId", operations: [create, update, delete] }]) {
+  id: ID!
+  author: Useric @connection(name: "UserMessagesic", keyField: "authorId")
+  authorId: String
+  authorName: String!
+  authorImage: String!  
+  content: String!
+  chatroom: Chatroomic! @connection(name: "RoomMsgsic")
+  messageRoomId: ID!
+  messageChatroomId: ID!
+	createdAt: String
+	updatedAt: String
+}
+
+type RoomLink @aws_cognito_user_pools
+  @model(
+    mutations: { create: "createRoomLink", update: "updateRoomLink", delete: "deleteRoomLink" }
+    queries: { get: "getRoomlink", list: "listRoomlink" }
+    subscriptions: null
+  )
+  @auth(rules: [{ allow: owner, ownerField: "members", operations: [create, update, delete] }]) {
+  id: ID!
+  user: User! @connection(name: "UserLinks")
+  roomLinkUserId: ID
+  chatroom: Chatroom! @connection(name: "AssociatedLinks")
+  roomLinkChatroomId: ID!
+  chatroomName: String
+	createdAt: String
+	updatedAt: String
+}
+
+type RoomLinkmadras @aws_cognito_user_pools
+  @model(
+    mutations: { create: "createRoomLinkmadras", update: "updateRoomLinkmadras", delete: "deleteRoomLinkmadras" }
+    queries: { get: "getRoomlinkmadras", list: "listRoomlinkmadras" }
+    subscriptions: null
+  )
+  @auth(rules: [{ allow: owner, ownerField: "members", operations: [create, update, delete] }]) {
+  id: ID!
+  user: Usermadras! @connection(name: "UserLinksmadras")
+  roomLinkUserId: ID
+  chatroom: Chatroommadras! @connection(name: "AssociatedLinksmadras")
+  roomLinkChatroomId: ID!
+  chatroomName: String
+	createdAt: String
+	updatedAt: String
+}
+
+type RoomLinkic @aws_cognito_user_pools
+  @model(
+    mutations: { create: "createRoomLinkic", update: "updateRoomLinkic", delete: "deleteRoomLinkic" }
+    queries: { get: "getRoomlinkic", list: "listRoomlinkic" }
+    subscriptions: null
+  )
+  @auth(rules: [{ allow: owner, ownerField: "members", operations: [create, update, delete] }]) {
+  id: ID!
+  user: Useric! @connection(name: "UserLinksic")
+  roomLinkUserId: ID
+  chatroom: Chatroomic! @connection(name: "AssociatedLinksic")
+  roomLinkChatroomId: ID!
+  chatroomName: String
+	createdAt: String
+	updatedAt: String
+}
+
+
+type Blog @aws_api_key @aws_cognito_user_pools @model 
+  @auth(rules: [{ allow: owner, operations: [create, update, delete] },{allow:private, operations:[read]},{allow:public, operations:[read]}]) {
+  id: ID!
+  name: String!
+  posts: [Post] @connection(keyName: "byBlog", fields: ["id"])
+}
+
+type Blogmadras @aws_api_key @aws_cognito_user_pools @model 
+  @auth(rules: [{ allow: owner, operations: [create, update, delete] },{allow:private, operations:[read]},{allow:public, operations:[read]}]) {
+  id: ID!
+  name: String!
+  posts: [Postmadras] @connection(keyName: "byBlogmadras", fields: ["id"])
+}
+
+type Blogic @aws_api_key @aws_cognito_user_pools @model 
+  @auth(rules: [{ allow: owner, operations: [create, update, delete] },{allow:private, operations:[read]},{allow:public, operations:[read]}]) {
+  id: ID!
+  name: String!
+  posts: [Postic] @connection(keyName: "byBlogic", fields: ["id"])
+}
+
+type Post @aws_api_key @aws_cognito_user_pools @model @key(name: "byBlog", fields: ["blogID"], queryField: "byBlog") 
+@auth(rules: [{ allow: owner, operations: [create, update, delete] },{allow:private, operations:[read]},{allow:public, operations:[read]}]) {
+  id: ID!
+  title: String!
+  content: String
+  blogID: ID!
+  blog: Blog @connection(fields: ["blogID"])
+  comments: [Comment] @connection(keyName: "byPost", fields: ["id"])
+}
+
+type Postmadras @aws_api_key @aws_cognito_user_pools @model @key(name: "byBlogmadras", fields: ["blogID"], queryField: "byBlogmadras") 
+@auth(rules: [{ allow: owner, operations: [create, update, delete] },{allow:private, operations:[read]},{allow:public, operations:[read]}]) {
+  id: ID!
+  title: String!
+  content: String
+  blogID: ID!
+  blog: Blogmadras @connection(fields: ["blogID"])
+  comments: [Commentmadras] @connection(keyName: "byPostmadras", fields: ["id"])
+}
+
+type Postic @aws_api_key @aws_cognito_user_pools @model @key(name: "byBlogic", fields: ["blogID"], queryField: "byBlogic") 
+@auth(rules: [{ allow: owner, operations: [create, update, delete] },{allow:private, operations:[read]},{allow:public, operations:[read]}]) {
+  id: ID!
+  title: String!
+  content: String
+  blogID: ID!
+  blog: Blogic @connection(fields: ["blogID"])
+  comments: [Commentic] @connection(keyName: "byPostic", fields: ["id"])
+}
+
+type Group @aws_api_key @aws_cognito_user_pools @model 
+  @auth(rules: [{ allow: owner, operations: [create, update, delete] },{allow:private, operations:[read]},{allow:public, operations:[read]}]) {
+  id: ID!
+  name: String
+  groupslug: String
+  content: String
+  description: String
+  groupImage: String
+  activities: [Activity] @connection(keyName: "byGroup", fields: ["id"])
+}
+
+type Groupmadras @aws_api_key @aws_cognito_user_pools @model 
+  @auth(rules: [{ allow: owner, operations: [create, update, delete] },{allow:private, operations:[read]},{allow:public, operations:[read]}]) {
+  id: ID!
+  name: String
+  groupslug: String
+  content: String
+  description: String
+  groupImage: String
+  activities: [Activitymadras] @connection(keyName: "byGroupmadras", fields: ["id"])
+}
+
+type Groupic @aws_api_key @aws_cognito_user_pools @model 
+  @auth(rules: [{ allow: owner, operations: [create, update, delete] },{allow:private, operations:[read]},{allow:public, operations:[read]}]) {
+  id: ID!
+  name: String
+  groupslug: String
+  content: String
+  description: String
+  groupImage: String
+  activities: [Activityic] @connection(keyName: "byGroupic", fields: ["id"])
+}
+
+
+type Activity @aws_api_key @aws_cognito_user_pools @model 
+@key(name: "byGroup", fields: ["groupID"], queryField: "byGroup")
+@key(name: "bysortID", fields: ["sorTid"], queryField: "bysortID")
+@key(name: "byorderID", fields: ["sorTid", "id"], queryField: "byorderID")
+@key(name: "orderbyID", fields: ["sorTid", "updatedAt","id"], queryField: "orderbyID")
+@key(name: "orderbydateID", fields: ["sorTid", "id","updatedAt"], queryField: "orderbydateID")
+@key(name: "orderbyupdatedID", fields: ["sorTid", "updatedAt"], queryField: "orderbyupdatedID")
+@auth(rules: [{ allow: owner, operations: [create, update, delete] },{allow:private, operations:[read,update]},{allow:public, operations:[read]}]) {
+  id: ID!
+  sorTid: ID!
+  title: String
+  slug: String
+  content: String
+  contentLowercase: String
+  groupID: ID!
+  likeids: [Int]
+  group: Group @connection(fields: ["groupID"])
+  authorId: ID!
+  authorName: String
+  userdetails: User @connection(fields:["authorId"])  
+  authorImage: String
+  activityImage: String
+  createdAt: AWSDateTime
+  updatedAt: AWSDateTime
+}
+
+type Activitymadras @aws_api_key @aws_cognito_user_pools @model 
+@key(name: "byGroupmadras", fields: ["groupID"], queryField: "byGroupmadras")
+@key(name: "bysortIDmadras", fields: ["sorTid"], queryField: "bysortIDmadras")
+@key(name: "byorderIDmadras", fields: ["sorTid", "id"], queryField: "byorderIDmadras")
+@key(name: "orderbyIDmadras", fields: ["sorTid", "updatedAt","id"], queryField: "orderbyIDmadras")
+@key(name: "orderbydateIDmadras", fields: ["sorTid", "id","updatedAt"], queryField: "orderbydateIDmadras")
+@key(name: "orderbyupdatedIDmadras", fields: ["sorTid", "updatedAt"], queryField: "orderbyupdatedIDmadras")
+@auth(rules: [{ allow: owner, operations: [create, update, delete] },{allow:private, operations:[read,update]},{allow:public, operations:[read]}]) {
+  id: ID!
+  sorTid: ID!
+  title: String
+  slug: String
+  content: String
+  contentLowercase: String
+  groupID: ID!
+  likeids: [Int]
+  group: Groupmadras @connection(fields: ["groupID"])
+  authorId: ID!
+  authorName: String
+  userdetails: Usermadras @connection(fields:["authorId"])  
+  authorImage: String
+  activityImage: String
+  createdAt: AWSDateTime
+  updatedAt: AWSDateTime
+}
+
+type Activityic @aws_api_key @aws_cognito_user_pools @model 
+@key(name: "byGroupic", fields: ["groupID"], queryField: "byGroupic")
+@key(name: "bysortIDic", fields: ["sorTid"], queryField: "bysortIDic")
+@key(name: "byorderIDic", fields: ["sorTid", "id"], queryField: "byorderIDic")
+@key(name: "orderbyIDic", fields: ["sorTid", "updatedAt","id"], queryField: "orderbyIDic")
+@key(name: "orderbydateIDic", fields: ["sorTid", "id","updatedAt"], queryField: "orderbydateIDic")
+@key(name: "orderbyupdatedIDic", fields: ["sorTid", "updatedAt"], queryField: "orderbyupdatedIDic")
+@auth(rules: [{ allow: owner, operations: [create, update, delete] },{allow:private, operations:[read,update]},{allow:public, operations:[read]}]) {
+  id: ID!
+  sorTid: ID!
+  title: String
+  slug: String
+  content: String
+  contentLowercase: String
+  groupID: ID!
+  likeids: [Int]
+  group: Groupic @connection(fields: ["groupID"])
+  authorId: ID!
+  authorName: String
+  userdetails: Useric @connection(fields:["authorId"])  
+  authorImage: String
+  activityImage: String
+  createdAt: AWSDateTime
+  updatedAt: AWSDateTime
+}
+
+
+type Comment @aws_api_key @aws_cognito_user_pools @model(subscriptions: null) 
+@key(name: "byPost", fields: ["postID", "content"], queryField: "byPost")
+@key(name: "byUser", fields: ["authorId"], queryField: "byUser") 
+@auth(rules: [{ allow: owner, operations: [create, update, delete] },{allow:private, operations:[read]},{allow:public, operations:[read]}]){
+  id: ID
+  postID: ID!
+  post: Post @connection(fields: ["postID"])
+  content: String!
+  authorId: ID!
+  authorName: String!
+  userdetails: User @connection(fields:["authorId"])  
+  authorImage: String!
+  createdAt: String
+	updatedAt: String
+}
+
+type Commentmadras @aws_api_key @aws_cognito_user_pools @model(subscriptions: null) 
+@key(name: "byPostmadras", fields: ["postID", "content"], queryField: "byPostmadras")
+@key(name: "byUsermadras", fields: ["authorId"], queryField: "byUsermadras") 
+@auth(rules: [{ allow: owner, operations: [create, update, delete] },{allow:private, operations:[read]},{allow:public, operations:[read]}]){
+  id: ID
+  postID: ID!
+  post: Postmadras @connection(fields: ["postID"])
+  content: String!
+  authorId: ID!
+  authorName: String!
+  userdetails: Usermadras @connection(fields:["authorId"])  
+  authorImage: String!
+  createdAt: String
+	updatedAt: String
+}
+
+type Commentic @aws_api_key @aws_cognito_user_pools @model(subscriptions: null) 
+@key(name: "byPostic", fields: ["postID", "content"], queryField: "byPostic")
+@key(name: "byUseric", fields: ["authorId"], queryField: "byUseric") 
+@auth(rules: [{ allow: owner, operations: [create, update, delete] },{allow:private, operations:[read]},{allow:public, operations:[read]}]){
+  id: ID
+  postID: ID!
+  post: Postic @connection(fields: ["postID"])
+  content: String!
+  authorId: ID!
+  authorName: String!
+  userdetails: Useric @connection(fields:["authorId"])  
+  authorImage: String!
+  createdAt: String
+updatedAt: String
+}
+
+type Subscription @aws_api_key @aws_cognito_user_pools {
+  onCreateRoomLink(roomLinkUserId: ID!): RoomLink
+    @aws_subscribe(mutations: ["createRoomLink"])
+  onDeleteRoomLink(roomLinkUserId: ID!): RoomLink
+    @aws_subscribe(mutations: ["deleteRoomLink"])
+  onCreateUsernotification(userID: ID!): UserNotifications
+    @aws_subscribe(mutations: ["createUserNotifications"])
+  onDeleteUserNotification(userID: ID!): UserNotifications
+    @aws_subscribe(mutations: ["deleteUserNotifications"])      
+  onCreateMessage(messageRoomId: ID!,messageChatroomId: ID!): Message
+    @aws_subscribe(mutations: ["createMessage"])
+  onDeleteMessage(messageRoomId: ID!,messageChatroomId: ID!): Message
+    @aws_subscribe(mutations: ["deleteMessage"])
+  onCreateComment(postID: ID): Comment
+    @aws_subscribe(mutations: ["createComment"])
+  onDeleteComment(postID: ID): Comment
+    @aws_subscribe(mutations: ["deleteComment"])
+  onCreateRoomLinkmadras(roomLinkUserId: ID!): RoomLinkmadras
+    @aws_subscribe(mutations: ["createRoomLinkmadras"])
+  onDeleteRoomLinkmadras(roomLinkUserId: ID!): RoomLinkmadras
+    @aws_subscribe(mutations: ["deleteRoomLinkmadras"])
+  onCreateUsernotificationmadras(userID: ID!): UserNotificationsmadras
+    @aws_subscribe(mutations: ["createUserNotificationsmadras"])
+  onDeleteUserNotificationmadras(userID: ID!): UserNotificationsmadras
+    @aws_subscribe(mutations: ["deleteUserNotificationsmadras"])      
+  onCreateMessagemadras(messageRoomId: ID!,messageChatroomId: ID!): Messagemadras
+    @aws_subscribe(mutations: ["createMessagemadras"])
+  onDeleteMessagemadras(messageRoomId: ID!,messageChatroomId: ID!): Messagemadras
+    @aws_subscribe(mutations: ["deleteMessagemadras"])
+  onCreateCommentmadras(postID: ID): Commentmadras
+    @aws_subscribe(mutations: ["createCommentmadras"])
+  onDeleteCommentmadras(postID: ID): Commentmadras
+    @aws_subscribe(mutations: ["deleteCommentmadras"])
+  onCreateRoomLinkic(roomLinkUserId: ID!): RoomLinkic
+    @aws_subscribe(mutations: ["createRoomLinkic"])
+  onDeleteRoomLinkic(roomLinkUserId: ID!): RoomLinkic
+    @aws_subscribe(mutations: ["deleteRoomLinkic"])
+  onCreateUsernotificationic(userID: ID!): UserNotificationsic
+    @aws_subscribe(mutations: ["createUserNotificationsic"])
+  onDeleteUserNotificationic(userID: ID!): UserNotificationsic
+    @aws_subscribe(mutations: ["deleteUserNotificationsic"])      
+  onCreateMessageic(messageRoomId: ID!,messageChatroomId: ID!): Messageic
+    @aws_subscribe(mutations: ["createMessageic"])
+  onDeleteMessageic(messageRoomId: ID!,messageChatroomId: ID!): Messageic
+    @aws_subscribe(mutations: ["deleteMessageic"])
+  onCreateCommentic(postID: ID!): Commentic
+    @aws_subscribe(mutations: ["createCommentic"])
+  onDeleteCommentic(postID: ID): Commentic
+    @aws_subscribe(mutations: ["deleteCommentic"])  	
+}

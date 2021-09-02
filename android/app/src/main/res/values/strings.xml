@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Chennai Community</string>
+    <string name="fb_app_id">441675183058606</string>
+    <string name="fb_login_protocol_scheme">fb441675183058606</string>    
+</resources>

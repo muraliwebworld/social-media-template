@@ -1,0 +1,17 @@
+{
+  "name": "chennaicommunityforum",
+  "displayName": "Chennai Community",
+  "expo": {
+    "name": "chennaicommunityforum",
+    "slug": "chennaicommunityforum",
+    "scheme": "chforum",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "splash": {
+      "image": "./Assets/Images/icon.png",
+      "backgroundColor": "#ffffff"
+    }    
+  }
+}

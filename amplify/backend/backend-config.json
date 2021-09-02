@@ -1,0 +1,41 @@
+{
+	"auth": {
+		"xxxx11111": {
+			"service": "Cognito",
+			"providerPlugin": "awscloudformation",
+			"dependsOn": [],
+			"customAuth": false
+		}
+	},
+	"api": {
+		"xxxxx": {
+			"service": "AppSync",
+			"providerPlugin": "awscloudformation",
+			"output": {
+				"authConfig": {
+					"defaultAuthentication": {
+						"authenticationType": "AMAZON_COGNITO_USER_POOLS",
+						"userPoolConfig": {
+							"userPoolId": "authxxxx11111"
+						}
+					},
+					"additionalAuthenticationProviders": [
+						{
+							"authenticationType": "API_KEY",
+							"apiKeyConfig": {
+								"apiKeyExpirationDays": 365,
+								"description": "icchat"
+							}
+						}
+					]
+				}
+			}
+		}
+	},
+	"storage": {
+		"s3898fce36": {
+			"service": "S3",
+			"providerPlugin": "awscloudformation"
+		}
+	}
+}
