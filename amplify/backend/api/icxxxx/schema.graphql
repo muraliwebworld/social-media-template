@@ -121,11 +121,6 @@ type Groupmadras @aws_api_key @aws_cognito_user_pools @model
 
 
 type Activitymadras @aws_api_key @aws_cognito_user_pools @model 
-@key(name: "byGroupmadras", fields: ["groupID"], queryField: "byGroupmadras")
-@key(name: "bysortIDmadras", fields: ["sorTid"], queryField: "bysortIDmadras")
-@key(name: "byorderIDmadras", fields: ["sorTid", "id"], queryField: "byorderIDmadras")
-@key(name: "orderbyIDmadras", fields: ["sorTid", "updatedAt","id"], queryField: "orderbyIDmadras")
-@key(name: "orderbydateIDmadras", fields: ["sorTid", "id","updatedAt"], queryField: "orderbydateIDmadras")
 @key(name: "orderbyupdatedIDmadras", fields: ["sorTid", "updatedAt"], queryField: "orderbyupdatedIDmadras")
 @auth(rules: [{ allow: owner, operations: [create, update, delete] },{allow:private, operations:[read,update]},{allow:public, operations:[read]}]) {
   id: ID!
