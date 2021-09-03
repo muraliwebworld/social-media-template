@@ -32,7 +32,7 @@ https://play.google.com/store/apps/details?id=com.indiacities.chennaicommunityfo
   ```amplify add api```<br/><br/>
   (Choose Cognito User Pools as the authentication type(read write update delete) and also API for read only)<br/>
   (When prompted for the GraphQL schema, use the following schema:)
-  ```
+  ```graphql
   type Usermadras @aws_api_key @aws_cognito_user_pools
   @model 
   @auth(rules: [{ allow: owner, operations: [create, update, delete] },{allow:private, operations:[read]},{allow:public, operations:[read]}]) {
